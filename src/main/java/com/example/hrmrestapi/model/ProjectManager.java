@@ -1,5 +1,6 @@
 package com.example.hrmrestapi.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,8 +16,7 @@ import java.util.Date;
 @Table(name = "project_manager")
 @Component
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class ProjectManager {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,12 +25,12 @@ public class ProjectManager {
 
     @Column(name = "name")
     @NotNull
-    @Size(min = 2, max = 25, message = "The employee name must have between 2 and 25 letters")
+    @Size(min = 2, max = 25, message = "The manager name must have between 2 and 25 letters")
     private String name;
 
     @Column(name = "surname")
     @NotNull
-    @Size(min = 2, max = 25, message = "The surname must have between 2 and 25 letters")
+    @Size(min = 2, max = 25, message = "The manager surname must have between 2 and 25 letters")
     private String surname;
 
     @Column(name = "hired_at")

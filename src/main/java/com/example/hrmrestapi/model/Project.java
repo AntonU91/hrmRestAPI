@@ -1,6 +1,7 @@
 package com.example.hrmrestapi.model;
 
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +17,7 @@ import java.util.List;
 @Table(name = "project")
 @Component
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +31,7 @@ public class Project {
 
     @Column(name = "launched_at")
     @Temporal(TemporalType.DATE)
-    private Date launched_at;
+    private Date launchedAt;
 
     @ManyToOne()
     @JoinColumn(name = "project_manager_id", referencedColumnName = "id")
