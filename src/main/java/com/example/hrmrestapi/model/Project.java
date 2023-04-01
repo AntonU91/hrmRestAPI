@@ -44,7 +44,6 @@ public class Project {
             inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
     @JsonBackReference
-    @JsonIgnoreProperties("projects")
     private List<Employee> employees;
 
 }

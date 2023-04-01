@@ -4,6 +4,8 @@ package com.example.hrmrestapi.dto;
 import com.example.hrmrestapi.model.Project;
 import com.example.hrmrestapi.util.Experience;
 import com.example.hrmrestapi.util.Position;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;

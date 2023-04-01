@@ -55,7 +55,6 @@ public class Employee {
 
     @ManyToMany(mappedBy = "employees")
     @JsonManagedReference
-    @JsonIgnoreProperties("employees")
     private List<Project> projects;
 
 }

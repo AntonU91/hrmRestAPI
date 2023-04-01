@@ -3,6 +3,8 @@ package com.example.hrmrestapi.dto;
 
 import com.example.hrmrestapi.model.Employee;
 import com.example.hrmrestapi.model.ProjectManager;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +27,7 @@ public class ProjectDTO {
 
     private ProjectManager projectManager;
 
+    @JsonIgnoreProperties("projects")
     private List<Employee> employees;
 
 }
