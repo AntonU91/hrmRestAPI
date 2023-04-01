@@ -43,9 +43,9 @@ public class EmployeeDTO {
 
     private Date hiredAt;
 
-//    @Getter(AccessLevel.NONE)
-//    @NotNull()
-//    private List<Project> projects;
+
+    @NotNull()
+    private List<Project> projects;
 
 
     public void setExperience(String experience) {
@@ -55,19 +55,5 @@ public class EmployeeDTO {
     public void setPosition(String position) {
         this.position = Position.valueOf(position.toUpperCase());
     }
-
-//    public String getProjects() {
-//        // ObjectMapper objectMapper = new ObjectMapper();
-////      String projectsToStr = null;
-////        try {
-////            projectsToStr = objectMapper.writeValueAsString(projects);
-////        } catch (JsonProcessingException e) {
-////            e.printStackTrace();
-////        }
-////        return projectsToStr;
-////    }
-//        StringBuilder stringBuilder = new StringBuilder();
-//        projects.forEach(project -> stringBuilder.append(project.toString()));
-//        return stringBuilder.toString();
-//    }
 }
+

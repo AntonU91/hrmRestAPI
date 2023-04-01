@@ -2,8 +2,12 @@ package com.example.hrmrestapi.model;
 
 import com.example.hrmrestapi.util.Experience;
 import com.example.hrmrestapi.util.Position;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -50,6 +54,8 @@ public class Employee {
     private Date hiredAt;
 
     @ManyToMany(mappedBy = "employees")
+    @JsonManagedReference
+    @JsonIgnoreProperties("employees")
     private List<Project> projects;
 
 }

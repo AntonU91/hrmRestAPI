@@ -23,8 +23,8 @@ public class ProjectDTO {
 
     private Date launchedAt;
 
-//    private ProjectManager projectManager;
-//
-//    private List<Employee> employees;
+    private ProjectManager projectManager;
+
+    private List<Employee> employees;
 
 }
