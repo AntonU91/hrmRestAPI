@@ -4,6 +4,8 @@ package com.example.hrmrestapi.dto;
 import com.example.hrmrestapi.model.Project;
 import com.example.hrmrestapi.util.Experience;
 import com.example.hrmrestapi.util.Position;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,8 +43,9 @@ public class EmployeeDTO {
 
     private Date hiredAt;
 
-    private List<Project> projects;
-
+//    @Getter(AccessLevel.NONE)
+//    @NotNull()
+//    private List<Project> projects;
 
 
     public void setExperience(String experience) {
@@ -52,4 +55,19 @@ public class EmployeeDTO {
     public void setPosition(String position) {
         this.position = Position.valueOf(position.toUpperCase());
     }
+
+//    public String getProjects() {
+//        // ObjectMapper objectMapper = new ObjectMapper();
+////      String projectsToStr = null;
+////        try {
+////            projectsToStr = objectMapper.writeValueAsString(projects);
+////        } catch (JsonProcessingException e) {
+////            e.printStackTrace();
+////        }
+////        return projectsToStr;
+////    }
+//        StringBuilder stringBuilder = new StringBuilder();
+//        projects.forEach(project -> stringBuilder.append(project.toString()));
+//        return stringBuilder.toString();
+//    }
 }

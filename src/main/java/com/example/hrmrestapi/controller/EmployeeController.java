@@ -16,13 +16,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController()
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 @AllArgsConstructor
 public class EmployeeController {
     EmployeeService employeeService;
     ModelMapper modelMapper;
+
+    @GetMapping()
+    public List<EmployeeDTO> getAllEmployees() {
+        return convertToEmployeeDTO(employeeService.findAll());
+    }
 
     @PostMapping
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid EmployeeDTO employeeDTO, BindingResult bindingResult) {
@@ -56,6 +62,12 @@ public class EmployeeController {
 
     public Employee convertToEmployee(EmployeeDTO employeeDTO) {
         return modelMapper.map(employeeDTO, Employee.class);
+    }
+
+    public List<EmployeeDTO> convertToEmployeeDTO(List<Employee> employees) {
+        return employees
+                .stream()
+                .map(this::convertToEmployeeDTO).collect(Collectors.toList());
     }
 
 

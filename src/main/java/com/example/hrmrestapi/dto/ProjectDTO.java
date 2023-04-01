@@ -20,11 +20,11 @@ public class ProjectDTO {
     @Size(min = 2, max = 25, message = "The project name must have between 2 and 25 letters")
     private String name;
 
-    @Temporal(TemporalType.DATE)
+
     private Date launchedAt;
 
-    private ProjectManager projectManager;
-
-    private List<Employee> employees;
+//    private ProjectManager projectManager;
+//
+//    private List<Employee> employees;
 
 }
