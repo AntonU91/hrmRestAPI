@@ -35,14 +35,12 @@ public class Employee {
     private String surname;
 
     @Column(name = "position")
-    @NotEmpty(message = "Employee should has position")
-    @NotNull
+    @NotNull(message = "Employee should has position")
     @Enumerated(EnumType.STRING)
     private Position position;
 
     @Column(name = "experience_level")
-    @NotEmpty(message = "Employee should has experience level")
-    @NotNull
+    @NotNull(message = "Employee should has experience level")
     @Enumerated(EnumType.STRING)
     private Experience experience;
 

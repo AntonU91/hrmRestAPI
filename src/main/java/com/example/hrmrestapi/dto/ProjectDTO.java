@@ -26,4 +26,5 @@ public class ProjectDTO {
     private ProjectManager projectManager;
 
     private List<Employee> employees;
+
 }

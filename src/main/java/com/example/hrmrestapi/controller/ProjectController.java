@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @RestController
@@ -55,8 +54,9 @@ public class ProjectController {
     public ResponseEntity<HttpStatus> assignEmployee(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "employeeId") int employeeId) {
         Project project = projectService.findById(projectId);
         Employee employee = employeeService.findById(employeeId);
-        // project.setEmployees();
-        return new ResponseEntity<>(HttpStatus.OK);
+        project.setEmployees(new ArrayList<>(List.of(employee)));
+        projectService.save(project);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 

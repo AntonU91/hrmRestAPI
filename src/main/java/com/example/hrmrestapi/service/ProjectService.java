@@ -7,14 +7,18 @@ import com.example.hrmrestapi.util.ProjectNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class ProjectService {
     ProjectRepo projectRepo;
+    EntityManager entityManager;
 
 
     public List<Project> findAll() {
@@ -25,6 +29,7 @@ public class ProjectService {
         return projects;
     }
 
+    @Transactional
     public void save(Project project) {
         projectRepo.save(supplementProject(project));
     }
@@ -37,7 +42,16 @@ public class ProjectService {
     }
 
     public Project supplementProject(Project project) {
-        project.setLaunchedAt(new Date());
+        if (!checkIfExistByLaunchedDate(project)) {
+            project.setLaunchedAt(new Date());
+        }
         return project;
+    }
+
+    private boolean checkIfExistByLaunchedDate(Project project) {
+        List<Project> list = entityManager.createQuery(" SELECT p FROM Project p WHERE p.launchedAt=:launch_at")
+                .setParameter("launch_at", project.getLaunchedAt())
+                .getResultList();
+        return list.isEmpty();
     }
 }
