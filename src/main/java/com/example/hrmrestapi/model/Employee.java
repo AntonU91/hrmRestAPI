@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -34,11 +35,13 @@ public class Employee {
     private String surname;
 
     @Column(name = "position")
+    @NotEmpty(message = "Employee should has position")
     @NotNull
     @Enumerated(EnumType.STRING)
     private Position position;
 
     @Column(name = "experience_level")
+    @NotEmpty(message = "Employee should has experience level")
     @NotNull
     @Enumerated(EnumType.STRING)
     private Experience experience;

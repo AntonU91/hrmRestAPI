@@ -28,7 +28,6 @@ public class EmployeeDTO {
 
 
     @NotNull
-    @Enumerated(EnumType.STRING)
     private Position position;
 
 

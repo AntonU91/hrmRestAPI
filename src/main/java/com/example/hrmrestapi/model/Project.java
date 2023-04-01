@@ -31,6 +31,7 @@ public class Project {
 
     @Column(name = "launched_at")
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Date launchedAt;
 
     @ManyToOne()
