@@ -33,6 +33,11 @@ public class ProjectController {
         return convertToProjectDTO(projectService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ProjectDTO getProject(@PathVariable(value = "id") int id) {
+        return convertToProjectDTO(projectService.findById(id));
+    }
+
     @PostMapping()
     public ResponseEntity<HttpStatus> createProject(@RequestBody() @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -51,10 +56,21 @@ public class ProjectController {
     }
 
     @PutMapping("/{projectId}/employees/{employeeId}")
-    public ResponseEntity<HttpStatus> assignEmployee(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "employeeId") int employeeId) {
+    public ResponseEntity<HttpStatus> assignEmployee(@PathVariable(value = "projectId") int projectId,
+                                                     @PathVariable(value = "employeeId") int employeeId) {
         Project project = projectService.findById(projectId);
         Employee employee = employeeService.findById(employeeId);
-        project.setEmployees(new ArrayList<>(List.of(employee)));
+        project.getEmployees().add(employee);
+        projectService.save(project);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{projectId}/employees/{employeeId}")
+    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable(value = "projectId") int projectId,
+                                                     @PathVariable(value = "employeeId") int employeeId) {
+        Project project = projectService.findById(projectId);
+        Employee employee = employeeService.findById(employeeId);
+        project.getEmployees().remove(employee);
         projectService.save(project);
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -107,6 +123,5 @@ public class ProjectController {
                 .stream()
                 .map(this::convertToProjectDTO).collect(Collectors.toList());
     }
-
 
 }

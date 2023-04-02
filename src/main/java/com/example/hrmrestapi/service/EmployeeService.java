@@ -8,6 +8,7 @@ import com.example.hrmrestapi.util.NoAnyEmployeesException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeeService {
     EmployeeRepo employeeRepo;
+    EntityManager entityManager;
 
 
     public Employee findById(int id) {
@@ -38,5 +40,12 @@ public class EmployeeService {
             throw new NoAnyEmployeesException("There is no employee exists");
         }
         return employees;
+    }
+
+    private boolean checkIfExistByHiredAtField(Project project) {
+        List<Project> list = entityManager.createQuery(" SELECT p FROM Project p WHERE p.launchedAt=:launch_at")
+                .setParameter("launch_at", project.getLaunchedAt())
+                .getResultList();
+        return list.isEmpty();
     }
 }
