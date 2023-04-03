@@ -18,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 public class EmployeeDTO {
 
-    @NotNull
-    private int id;
+//   // @Setter(AccessLevel.NONE)
+private int id;
 
     @NotNull
     @Size(min = 2, max = 25, message = "The employee name must have between 2 and 25 letters")
@@ -44,8 +44,7 @@ public class EmployeeDTO {
     private Date hiredAt;
 
 
-    @NotNull()
-    //  @JsonIgnoreProperties()
+    @NotNull
     private List<Project> projects;
 
 
@@ -56,5 +55,6 @@ public class EmployeeDTO {
     public void setPosition(String position) {
         this.position = Position.valueOf(position.toUpperCase());
     }
+
 }
 

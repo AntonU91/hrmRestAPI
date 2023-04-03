@@ -75,7 +75,11 @@ public class ProjectController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-
+    @DeleteMapping("projects/{id}")
+    public ResponseEntity<HttpStatus> deleteProject(@PathVariable(value = "id") int id) {
+        projectService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @ExceptionHandler(NoAnyProjectsException.class)
     public ResponseEntity<ProjectErrorResponse> handleException(NoAnyProjectsException ex) {
         ProjectErrorResponse projectErrorResponse = new ProjectErrorResponse(

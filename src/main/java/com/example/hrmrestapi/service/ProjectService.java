@@ -54,4 +54,9 @@ public class ProjectService {
                 .getResultList();
         return list.isEmpty();
     }
+
+    public void deleteById(int id) {
+        findById(id);
+        projectRepo.deleteById(id);
+    }
 }

@@ -4,8 +4,10 @@ package com.example.hrmrestapi.dto;
 import com.example.hrmrestapi.model.Employee;
 import com.example.hrmrestapi.model.ProjectManager;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProjectDTO {
 
-    @NotNull
+    @Setter(AccessLevel.NONE)
     private int id;
 
     @NotNull

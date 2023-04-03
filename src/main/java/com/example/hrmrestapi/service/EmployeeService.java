@@ -48,4 +48,9 @@ public class EmployeeService {
                 .getResultList();
         return list.isEmpty();
     }
+
+    public void deleteById(int id) {
+        findById(id);
+        employeeRepo.deleteById(id);
+    }
 }

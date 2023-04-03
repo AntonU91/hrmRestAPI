@@ -81,6 +81,11 @@ public class EmployeeController {
         employeeService.save(convertToEmployee(employeeDTO));
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable(value = "id") int id) {
+        employeeService.deleteById(id);
+     return    new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @ExceptionHandler(EmployeeNotCreatedException.class)
     public ResponseEntity<EmployeeErrorResponse> handleException(EmployeeNotCreatedException ex) {
