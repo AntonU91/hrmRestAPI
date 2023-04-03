@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,7 @@ public class ProjectController {
     }
 
     @PostMapping()
-    public ResponseEntity<HttpStatus> createProject(@RequestBody() @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> create(@RequestBody() @Valid ProjectDTO projectDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder stringBuilder = new StringBuilder();
             List<FieldError> errors = bindingResult.getFieldErrors();

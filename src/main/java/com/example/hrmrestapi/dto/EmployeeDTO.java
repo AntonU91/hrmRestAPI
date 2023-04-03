@@ -44,7 +44,6 @@ private int id;
     private Date hiredAt;
 
 
-    @NotNull
     private List<Project> projects;
 
 
