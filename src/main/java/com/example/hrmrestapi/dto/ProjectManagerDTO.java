@@ -8,26 +8,19 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-    @NoArgsConstructor
-    @Data
-    public class ProjectManagerDTO {
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name = "id", unique = true)
-        private int id;
+@NoArgsConstructor
+@Data
+public class ProjectManagerDTO {
 
-        @Column(name = "name")
-        @NotNull
-        @Size(min = 2, max = 25, message = "The manager name must have between 2 and 25 letters")
-        private String name;
+    private int id;
 
-        @Column(name = "surname")
-        @NotNull
-        @Size(min = 2, max = 25, message = "The manager surname must have between 2 and 25 letters")
-        private String surname;
+    @NotNull
+    @Size(min = 2, max = 25, message = "The manager name must have between 2 and 25 letters")
+    private String name;
 
-        @Column(name = "hired_at")
-        @NotNull
-        @Temporal(TemporalType.DATE)
-        private Date hiredAt;
+    @NotNull
+    @Size(min = 2, max = 25, message = "The manager surname must have between 2 and 25 letters")
+    private String surname;
+
+    private Date hiredAt;
 }

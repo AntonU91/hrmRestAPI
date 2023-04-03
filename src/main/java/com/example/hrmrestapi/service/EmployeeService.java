@@ -26,11 +26,13 @@ public class EmployeeService {
     }
 
     public void save(Employee employee) {
-        employeeRepo.save(supplementProject(employee));
+        employeeRepo.save(supplementEmployee(employee));
     }
 
-    public Employee supplementProject(Employee employee) {
-        employee.setHiredAt(new Date());
+    public Employee supplementEmployee(Employee employee) {
+        if (!employeeRepo.existsById(employee.getId())) {
+            employee.setHiredAt(new Date());
+        }
         return employee;
     }
 
@@ -40,13 +42,6 @@ public class EmployeeService {
             throw new NoAnyEmployeesException("There is no employee exists");
         }
         return employees;
-    }
-
-    private boolean checkIfExistByHiredAtField(Project project) {
-        List<Project> list = entityManager.createQuery(" SELECT p FROM Project p WHERE p.launchedAt=:launch_at")
-                .setParameter("launch_at", project.getLaunchedAt())
-                .getResultList();
-        return list.isEmpty();
     }
 
     public void deleteById(int id) {

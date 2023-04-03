@@ -1,5 +1,6 @@
 package com.example.hrmrestapi.model;
 
+import jdk.dynalink.linker.LinkerServices;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name="ProjectManager")
 @Table(name = "project_manager")
@@ -37,4 +39,8 @@ public class ProjectManager {
     @NotNull
     @Temporal(TemporalType.DATE)
     private Date hiredAt;
+
+    @OneToMany(mappedBy = "projectManager")
+            //TODO
+    List<Project> projects;
 }

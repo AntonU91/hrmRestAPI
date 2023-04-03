@@ -42,18 +42,12 @@ public class ProjectService {
     }
 
     public Project supplementProject(Project project) {
-        if (!checkIfExistByLaunchedDate(project)) {
+        if (!projectRepo.existsById(project.getId())) {
             project.setLaunchedAt(new Date());
         }
         return project;
     }
 
-    private boolean checkIfExistByLaunchedDate(Project project) {
-        List<Project> list = entityManager.createQuery(" SELECT p FROM Project p WHERE p.launchedAt=:launch_at")
-                .setParameter("launch_at", project.getLaunchedAt())
-                .getResultList();
-        return list.isEmpty();
-    }
 
     public void deleteById(int id) {
         findById(id);
