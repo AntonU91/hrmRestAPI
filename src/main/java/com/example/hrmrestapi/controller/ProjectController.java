@@ -113,15 +113,15 @@ public class ProjectController {
     }
 
 
-    private ProjectDTO convertToProjectDTO(Project project) {
+    public ProjectDTO convertToProjectDTO(Project project) {
         return modelMapper.map(project, ProjectDTO.class);
     }
 
-    private Project convertToProject(ProjectDTO projectDTO) {
+    public Project convertToProject(ProjectDTO projectDTO) {
         return modelMapper.map(projectDTO, Project.class);
     }
 
-    private List<ProjectDTO> convertToProjectDTO(List<Project> projects) {
+    public List<ProjectDTO> convertToProjectDTO(List<Project> projects) {
         return projects
                 .stream()
                 .map(this::convertToProjectDTO).collect(Collectors.toList());

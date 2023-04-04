@@ -30,8 +30,8 @@ public class ProjectService {
     }
 
     @Transactional
-    public void save(Project project) {
-        projectRepo.save(supplementProject(project));
+    public Project save(Project project) {
+      return   projectRepo.save(supplementProject(project));
     }
 
     public Project findById(int id) {

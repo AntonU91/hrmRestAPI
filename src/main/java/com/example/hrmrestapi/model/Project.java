@@ -3,8 +3,7 @@ package com.example.hrmrestapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,8 +14,9 @@ import java.util.List;
 @Entity(name = "Project")
 @Table(name = "project")
 @Component
-@NoArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

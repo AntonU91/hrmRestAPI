@@ -25,8 +25,8 @@ public class EmployeeService {
                         String.format("There is no any employee with id %d", id)));
     }
 
-    public void save(Employee employee) {
-        employeeRepo.save(supplementEmployee(employee));
+    public Employee save(Employee employee) {
+      return   employeeRepo.save(supplementEmployee(employee));
     }
 
     public Employee supplementEmployee(Employee employee) {
