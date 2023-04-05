@@ -4,10 +4,7 @@ import com.example.hrmrestapi.util.Experience;
 import com.example.hrmrestapi.util.Position;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -21,6 +18,7 @@ import java.util.List;
 @Table(name = "employee")
 @Component
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class Employee {
     @Id

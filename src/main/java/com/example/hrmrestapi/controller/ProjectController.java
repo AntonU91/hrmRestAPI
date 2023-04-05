@@ -51,7 +51,7 @@ public class ProjectController {
             throw new ProjectNotCreatedException(stringBuilder.toString());
         }
         projectService.save(convertToProject(projectDTO));
-        return ResponseEntity.ok(HttpStatus.CREATED);
+        return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{projectId}/employees/{employeeId}")

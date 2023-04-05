@@ -3,10 +3,7 @@ package com.example.hrmrestapi.dto;
 
 import com.example.hrmrestapi.util.Experience;
 import com.example.hrmrestapi.util.Position;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,6 +12,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeDTO {
 
     private int id;

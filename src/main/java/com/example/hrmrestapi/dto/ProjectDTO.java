@@ -3,6 +3,8 @@ package com.example.hrmrestapi.dto;
 
 import com.example.hrmrestapi.dto.EmployeeDTO;
 import com.example.hrmrestapi.model.ProjectManager;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonFormat
 public class ProjectDTO {
 
     private int id;
