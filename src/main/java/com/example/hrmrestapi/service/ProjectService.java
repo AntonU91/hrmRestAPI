@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class ProjectService {
     public Project supplementProject(Project project) {
         if (!projectRepo.existsById(project.getId())) {
             project.setLaunchedAt(new Date());
+            project.setEmployees(new ArrayList<>());
         }
         return project;
     }

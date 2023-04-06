@@ -15,8 +15,10 @@ import java.util.List;
 @Table(name = "project")
 @Component
 @Data
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +27,7 @@ public class Project {
 
     @Column(name = "name")
     @NotNull
+
     @Size(min = 2, max = 25, message = "The project name must have between 2 and 25 letters")
     private String name;
 
