@@ -45,9 +45,8 @@ public class ProjectManagerService {
 
     @Transactional
     public void deleteById(int id) {
-        if (projectManagerRepo.existsById(id)) {
-            projectManagerRepo.deleteById(id);
-        } else throw new ProjectManagerNotFoundException(String.format("There is no project manage with id %d", id));
+        findById(id);
+        projectManagerRepo.deleteById(id);
 
     }
 
