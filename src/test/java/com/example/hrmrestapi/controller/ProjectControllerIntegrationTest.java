@@ -3,8 +3,10 @@ package com.example.hrmrestapi.controller;
 import com.example.hrmrestapi.dto.ProjectDTO;
 import com.example.hrmrestapi.model.Employee;
 import com.example.hrmrestapi.model.Project;
+import com.example.hrmrestapi.model.ProjectManager;
 import com.example.hrmrestapi.repository.ProjectRepo;
 import com.example.hrmrestapi.service.EmployeeService;
+import com.example.hrmrestapi.service.ProjectManagerService;
 import com.example.hrmrestapi.service.ProjectService;
 import com.example.hrmrestapi.util.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -68,6 +70,9 @@ public class ProjectControllerIntegrationTest {
 
     @Autowired
     EmployeeService employeeService;
+
+    @Autowired
+    ProjectManagerService projectManagerService;
 
 
     @Sql(scripts = "/test.sql")
@@ -199,6 +204,73 @@ public class ProjectControllerIntegrationTest {
         assertEquals(expectedEmployee, actualEmployee);
     }
 
-    //TODO deleteEmployee, deleteProj; assignProjectManager,  deleteProjectManager
+    @Test
+    void whenDeleteEmployeeThanReturnProjectThanContainThisEmployee() throws Exception {
+        Project project = Project.builder()
+                .name("Test Proj")
+                .build();
+        Employee employee = Employee.builder()
+                .name("Ivan")
+                .surname("Ivanov")
+                .position(Position.DEVOPS)
+                .experience(Experience.JUNIOR)
+                .build();
+        Project savedProj = projectService.save(project);
+
+        Employee savedEmployee = employeeService.save(employee);
+        mockMvc.perform(delete("/projects/{projectId}/employees/{employeeId}", savedProj.getId(), savedEmployee.getId()))
+                .andExpect(status().isOk());
+        assertEquals(savedProj, projectService.findById(savedProj.getId()));
+
+    }
+
+    @Test
+    void whenDeleteProjectThanAfterAttemptToGetThisOneThrowProjectNotFoundException() throws Exception {
+        Project project = Project.builder()
+                .name("Test Proj")
+                .build();
+        Project savedProj = projectService.save(project);
+        List<Project> expectedProjectList = projectService.findAll();
+        mockMvc.perform(delete("/projects/{projectId}", savedProj.getId()))
+                .andExpect(status().isOk());
+        assertAll(
+                () -> assertThrows(ProjectNotFoundException.class, () -> projectService.findById(savedProj.getId())),
+                () -> assertEquals(expectedProjectList.size() - 1, projectService.findAll().size())
+        );
+    }
+
+    @Test
+    void whenAssignProjectManagerThanReturnStatus200AndAfterProjectContainsThisProjectManager() throws Exception {
+        Project project = Project.builder()
+                .name("Test Proj")
+                .build();
+        ProjectManager projectManager = ProjectManager.builder()
+                .name("Anton")
+                .surname("uzhva")
+                .build();
+        ProjectManager savedManager = projectManagerService.save(projectManager);
+        Project savedProj = projectService.save(project);
+        mockMvc.perform(put("/projects/{projectId}/manager/{managerId}", savedProj.getId(), savedManager.getId()))
+                .andExpect(status().isOk());
+        assertEquals(savedManager, projectService.findById(savedProj.getId()).getProjectManager());
+    }
+    @Test
+    void whenDeleteProjManagerThanReturnStatus200AndAfterProjectDoesNotContainThisProjectManager () throws Exception {
+        Project project = Project.builder()
+                .name("Test Proj")
+                .build();
+        ProjectManager projectManager = ProjectManager.builder()
+                .name("Anton")
+                .surname("uzhva")
+                .build();
+        ProjectManager savedManager = projectManagerService.save(projectManager);
+        Project savedProj = projectService.save(project);
+        mockMvc.perform(put("/projects/{projectId}/manager/{managerId}", savedProj.getId(), savedManager.getId()))
+                .andExpect(status().isOk());
+        mockMvc.perform(delete("/projects/{projectId}/manager/{managerId}",savedProj.getId(), savedManager.getId()))
+                .andExpect(status().isOk());
+        assertEquals(savedProj, projectService.findById(savedProj.getId()));
+    }
+
 }
 

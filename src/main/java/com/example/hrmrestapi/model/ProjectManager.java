@@ -1,10 +1,7 @@
 package com.example.hrmrestapi.model;
 
 import jdk.dynalink.linker.LinkerServices;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -19,6 +16,8 @@ import java.util.List;
 @Component
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
+@Builder
 public class ProjectManager {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

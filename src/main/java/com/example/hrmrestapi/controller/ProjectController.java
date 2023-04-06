@@ -77,15 +77,6 @@ public class ProjectController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("/projects/{id}")
-    public ResponseEntity<HttpStatus> deleteProject(@PathVariable(value = "id") int id) {
-        Project projectToDelete = projectService.findById(id);
-        for (Employee employee : projectToDelete.getEmployees()) {
-            employee.getProjects().remove(projectToDelete);
-        }
-        projectService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
     @PutMapping("/{projectId}/manager/{managerId}")
     public ResponseEntity<HttpStatus> assignProjectManager(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "managerId") int managerId) {
@@ -101,6 +92,16 @@ public class ProjectController {
         Project project = projectService.findById(projectId);
         project.setProjectManager(null);
         projectService.save(project);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteProject(@PathVariable(value = "id") int id) {
+        Project projectToDelete = projectService.findById(id);
+        for (Employee employee : projectToDelete.getEmployees()) {
+            employee.getProjects().remove(projectToDelete);
+        }
+        projectService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
