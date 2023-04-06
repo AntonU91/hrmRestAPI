@@ -2,6 +2,8 @@ package com.example.hrmrestapi.dto;
 
 import com.example.hrmrestapi.model.Project;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +15,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
+@Builder
 public class ProjectManagerDTO {
 
     private int id;

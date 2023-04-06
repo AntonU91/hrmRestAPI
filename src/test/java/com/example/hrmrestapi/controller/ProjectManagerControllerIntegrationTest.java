@@ -4,6 +4,7 @@ import com.example.hrmrestapi.dto.ProjectManagerDTO;
 import com.example.hrmrestapi.model.ProjectManager;
 import com.example.hrmrestapi.repository.ProjectManagerRepo;
 import com.example.hrmrestapi.service.ProjectManagerService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.ResponseEntity.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -87,6 +90,25 @@ class ProjectManagerControllerIntegrationTest {
     }
 
     @Test
-    void
+    void whenGetManagerByIdThanReturnStatus200() throws Exception {
+        ProjectManager expectedManager = projectManagerService.save(manager1);
+        MvcResult mvcResult = mockMvc.perform(get("/managers/{id}", expectedManager.getId()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        String response = mvcResult.getResponse().getContentAsString();
+        ProjectManagerDTO actualManager = objectMapper.readValue(response, ProjectManagerDTO.class);
+        assertEquals(modelMapper.map(expectedManager, ProjectManagerDTO.class), actualManager);
+    }
+    @Test
+    void whenCreateManagerWithProperFieldsThanReturnStatus201 () throws Exception {
+        ProjectManagerDTO projectManagerDTO = ProjectManagerDTO.builder()
+                .name("Ivan")
+                .surname("Ivanov")
+                .build();
+        mockMvc.perform(post("/managers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(projectManagerDTO)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
 
 }
