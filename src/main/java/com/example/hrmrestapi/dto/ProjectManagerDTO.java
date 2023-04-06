@@ -1,5 +1,6 @@
 package com.example.hrmrestapi.dto;
 
+import com.example.hrmrestapi.model.Project;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +9,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
-@JsonFormat
 public class ProjectManagerDTO {
 
     private int id;
@@ -25,4 +26,6 @@ public class ProjectManagerDTO {
     private String surname;
 
     private Date hiredAt;
+
+    List<ProjectDTO> projects;
 }

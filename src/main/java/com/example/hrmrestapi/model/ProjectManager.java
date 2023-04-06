@@ -18,6 +18,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class ProjectManager {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
