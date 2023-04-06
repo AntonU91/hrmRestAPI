@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +27,13 @@ public class EmployeeService {
     }
 
     public Employee save(Employee employee) {
-      return   employeeRepo.save(supplementEmployee(employee));
+        return employeeRepo.save(supplementEmployee(employee));
     }
 
     public Employee supplementEmployee(Employee employee) {
         if (!employeeRepo.existsById(employee.getId())) {
             employee.setHiredAt(new Date());
+            employee.setProjects(new ArrayList<>());
         }
         return employee;
     }

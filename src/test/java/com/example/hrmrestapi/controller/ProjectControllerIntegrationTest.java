@@ -9,10 +9,8 @@ import com.example.hrmrestapi.service.EmployeeService;
 import com.example.hrmrestapi.service.ProjectManagerService;
 import com.example.hrmrestapi.service.ProjectService;
 import com.example.hrmrestapi.util.*;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.bytebuddy.matcher.MethodExceptionTypeMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,10 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -116,13 +112,11 @@ public class ProjectControllerIntegrationTest {
     }
 
     @Test
-    void whenTryGetAllProjectsAndTheAreNoProjectsThanThrowNoAnyProjectsException() throws Exception {
+    void whenTryGetAllProjectsAndTheAreNoProjectsThanThrowNoAnyProjectsExceptionAndStatus404() throws Exception {
         projectRepo.deleteAll();
         MvcResult mvcResult = mockMvc.perform(get("/projects"))
                 .andExpect(status().isNotFound())
                 .andReturn();
-
-        String response = mvcResult.getResponse().getContentAsString();
         assertThrows(NoAnyProjectsException.class, projectService::findAll);
     }
 
@@ -165,11 +159,11 @@ public class ProjectControllerIntegrationTest {
                 .andExpect(status().isCreated());
         List<Project> expectedProjList = projectService.findAll();
         assertEquals(projectList.size() + 1, expectedProjList.size());
+
     }
 
     @Test
     void whenTryToCreateProjWithInvalidFieldsThanReturnStatus400() throws Exception {
-
         ProjectDTO invalidProjDTO = ProjectDTO
                 .builder().build();
         MvcResult mvcResult = mockMvc.perform(post("/projects")
@@ -254,8 +248,9 @@ public class ProjectControllerIntegrationTest {
                 .andExpect(status().isOk());
         assertEquals(savedManager, projectService.findById(savedProj.getId()).getProjectManager());
     }
+
     @Test
-    void whenDeleteProjManagerThanReturnStatus200AndAfterProjectDoesNotContainThisProjectManager () throws Exception {
+    void whenDeleteProjManagerThanReturnStatus200AndAfterProjectDoesNotContainThisProjectManager() throws Exception {
         Project project = Project.builder()
                 .name("Test Proj")
                 .build();
@@ -267,10 +262,9 @@ public class ProjectControllerIntegrationTest {
         Project savedProj = projectService.save(project);
         mockMvc.perform(put("/projects/{projectId}/manager/{managerId}", savedProj.getId(), savedManager.getId()))
                 .andExpect(status().isOk());
-        mockMvc.perform(delete("/projects/{projectId}/manager/{managerId}",savedProj.getId(), savedManager.getId()))
+        mockMvc.perform(delete("/projects/{projectId}/manager/{managerId}", savedProj.getId(), savedManager.getId()))
                 .andExpect(status().isOk());
         assertEquals(savedProj, projectService.findById(savedProj.getId()));
     }
-
 }
 

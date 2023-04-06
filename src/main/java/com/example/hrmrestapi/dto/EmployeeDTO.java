@@ -3,6 +3,7 @@ package com.example.hrmrestapi.dto;
 
 import com.example.hrmrestapi.util.Experience;
 import com.example.hrmrestapi.util.Position;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class EmployeeDTO {
 
     private int id;

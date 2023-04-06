@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class ProjectManagerService {
     private ProjectManager supplementProjectManager(ProjectManager projectManager) {
         if (!projectManagerRepo.existsById(projectManager.getId())) {
             projectManager.setHiredAt(new Date());
+            projectManager.setProjects(new ArrayList<>());
         }
         return projectManager;
     }

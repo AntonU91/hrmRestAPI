@@ -98,8 +98,10 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteProject(@PathVariable(value = "id") int id) {
         Project projectToDelete = projectService.findById(id);
-        for (Employee employee : projectToDelete.getEmployees()) {
-            employee.getProjects().remove(projectToDelete);
+        if (!projectToDelete.getEmployees().isEmpty()) {
+            for (Employee employee : projectToDelete.getEmployees()) {
+                employee.getProjects().remove(projectToDelete);
+            }
         }
         projectService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);

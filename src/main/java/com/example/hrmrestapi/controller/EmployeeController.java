@@ -5,7 +5,6 @@ import com.example.hrmrestapi.model.Employee;
 import com.example.hrmrestapi.model.Project;
 import com.example.hrmrestapi.service.EmployeeService;
 import com.example.hrmrestapi.util.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RestController()
+@RestController
 @RequestMapping("/employees")
 @AllArgsConstructor
 public class EmployeeController {
@@ -37,8 +36,8 @@ public class EmployeeController {
         return convertToEmployeeDTO(employeeService.findById(id));
     }
 
-    @PatchMapping("/{id}/position")
-    public ResponseEntity<HttpStatus> changePosition(@PathVariable(value = "id") int id,
+    @PutMapping("/{id}/position")
+    public ResponseEntity<HttpStatus> updatePosition(@PathVariable(value = "id") int id,
                                                      @RequestBody Map<String, String> positionName) {
         String position = positionName.get("position");
         if (doesPassedPositionMatchAvailablePositions(position)) {
@@ -51,8 +50,8 @@ public class EmployeeController {
         }
     }
 
-    @PatchMapping("/{id}/experience")
-    public ResponseEntity<HttpStatus> changeExperience(@PathVariable(value = "id") int id,
+    @PutMapping("/{id}/experience")
+    public ResponseEntity<HttpStatus> updateExperience(@PathVariable(value = "id") int id,
                                                        @RequestBody Map<String, String> experienceLevel) {
         String experience = experienceLevel.get("experience");
         if (doesPassedExperienceMatchAvailableExpLevel(experience)) {
@@ -65,9 +64,8 @@ public class EmployeeController {
         }
     }
 
-
     @PostMapping
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid EmployeeDTO employeeDTO, BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder stringBuilder = new StringBuilder();
             List<FieldError> errors = bindingResult.getFieldErrors();
@@ -80,18 +78,29 @@ public class EmployeeController {
             throw new EmployeeNotCreatedException(stringBuilder.toString());
         }
         employeeService.save(convertToEmployee(employeeDTO));
-        return ResponseEntity.ok(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable(value = "id") int id) {
         Employee employeeToDelete = employeeService.findById(id);
-        for (Project project : employeeToDelete.getProjects()) {
-            project.getEmployees().remove(employeeToDelete);
+        if (!employeeToDelete.getProjects().isEmpty()) {
+            for (Project project : employeeToDelete.getProjects()) {
+                project.getEmployees().remove(employeeToDelete);
+            }
         }
         employeeService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @ExceptionHandler(NoAnyEmployeesException.class)
+    public ResponseEntity<EmployeeErrorResponse> handleException(NoAnyEmployeesException ex) {
+        EmployeeErrorResponse employeeErrorResponse = new EmployeeErrorResponse(
+                ex.getMessage(), LocalDateTime.now()
+        );
+        return new ResponseEntity<>(employeeErrorResponse, HttpStatus.NOT_FOUND);
+    }
+
 
     @ExceptionHandler(EmployeeNotCreatedException.class)
     public ResponseEntity<EmployeeErrorResponse> handleException(EmployeeNotCreatedException ex) {

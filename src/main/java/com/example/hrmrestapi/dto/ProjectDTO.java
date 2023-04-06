@@ -19,7 +19,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonFormat
 @Builder
 public class ProjectDTO {
 
