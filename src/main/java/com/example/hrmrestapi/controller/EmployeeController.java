@@ -2,6 +2,7 @@ package com.example.hrmrestapi.controller;
 
 import com.example.hrmrestapi.dto.EmployeeDTO;
 import com.example.hrmrestapi.model.Employee;
+import com.example.hrmrestapi.model.Project;
 import com.example.hrmrestapi.service.EmployeeService;
 import com.example.hrmrestapi.util.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -81,10 +82,15 @@ public class EmployeeController {
         employeeService.save(convertToEmployee(employeeDTO));
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable(value = "id") int id) {
+        Employee employeeToDelete = employeeService.findById(id);
+        for (Project project : employeeToDelete.getProjects()) {
+            project.getEmployees().remove(employeeToDelete);
+        }
         employeeService.deleteById(id);
-     return    new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ExceptionHandler(EmployeeNotCreatedException.class)

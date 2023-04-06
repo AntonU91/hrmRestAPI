@@ -3,7 +3,9 @@ package com.example.hrmrestapi.controller;
 import com.example.hrmrestapi.dto.ProjectDTO;
 import com.example.hrmrestapi.model.Employee;
 import com.example.hrmrestapi.model.Project;
+import com.example.hrmrestapi.model.ProjectManager;
 import com.example.hrmrestapi.service.EmployeeService;
+import com.example.hrmrestapi.service.ProjectManagerService;
 import com.example.hrmrestapi.service.ProjectService;
 import com.example.hrmrestapi.util.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,7 @@ public class ProjectController {
     ProjectService projectService;
     EmployeeService employeeService;
     ModelMapper modelMapper;
+    ProjectManagerService projectManagerService;
 
     @GetMapping()
     public List<ProjectDTO> getAllProjects() {
@@ -51,7 +54,7 @@ public class ProjectController {
             throw new ProjectNotCreatedException(stringBuilder.toString());
         }
         projectService.save(convertToProject(projectDTO));
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{projectId}/employees/{employeeId}")
@@ -74,11 +77,30 @@ public class ProjectController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("projects/{id}")
+    @DeleteMapping("/projects/{id}")
     public ResponseEntity<HttpStatus> deleteProject(@PathVariable(value = "id") int id) {
         projectService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/{projectId}/manager/{managerId}")
+    public ResponseEntity<HttpStatus> assignProjectManager(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "managerId") int managerId) {
+        Project project = projectService.findById(projectId);
+        ProjectManager projectManager = projectManagerService.findById(managerId);
+        project.setProjectManager(projectManager);
+        projectService.save(project);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{projectId}/manager/{managerId}")
+    public ResponseEntity<HttpStatus> deleteProjectManager(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "managerId") int managerId) {
+        Project project = projectService.findById(projectId);
+        project.setProjectManager(null);
+        projectService.save(project);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
     @ExceptionHandler(NoAnyProjectsException.class)
     public ResponseEntity<ProjectErrorResponse> handleException(NoAnyProjectsException ex) {
         ProjectErrorResponse projectErrorResponse = new ProjectErrorResponse(

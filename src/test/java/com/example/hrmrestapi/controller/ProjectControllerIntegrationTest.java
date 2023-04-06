@@ -176,7 +176,7 @@ public class ProjectControllerIntegrationTest {
 
     @Test
     void whenAddEmployeeToProjectThatReturnThisProjectWhereEmployeeWasAddedContainThisOne() throws Exception {
-List<Project> projects = projectService.findAll();// FOR TEST!!!
+        List<Project> projects = projectService.findAll();// FOR TEST!!!
         Project project = Project.builder()
                 .name("Second")
                 .build();
@@ -199,6 +199,6 @@ List<Project> projects = projectService.findAll();// FOR TEST!!!
         assertEquals(expectedEmployee, actualEmployee);
     }
 
-    //TODO deleteEmployee, deleteProj;
+    //TODO deleteEmployee, deleteProj; assignProjectManager,  deleteProjectManager
 }
 

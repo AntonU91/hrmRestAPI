@@ -40,7 +40,6 @@ public class ProjectManager {
     @Temporal(TemporalType.DATE)
     private Date hiredAt;
 
-    @OneToMany(mappedBy = "projectManager")
-            //TODO
+    @OneToMany(mappedBy = "projectManager" )
     List<Project> projects;
 }
