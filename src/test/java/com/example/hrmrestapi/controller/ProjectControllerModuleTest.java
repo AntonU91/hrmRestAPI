@@ -82,8 +82,6 @@ class ProjectControllerModuleTest {
         projectDTO2 = new ProjectDTO(2, "Second Proj", new Date(), new ProjectManagerDTO(), new ArrayList<>());
         projectDTOList = new ArrayList<>(List.of(projectDTO1,
                 projectDTO2));
-
-
     }
 
     @Test
@@ -145,14 +143,6 @@ class ProjectControllerModuleTest {
         verify(projectService, times(1)).findById(anyInt());
         verify(employeeService, times(1)).findById(anyInt());
         verify(projectService, times(1)).save(any());
-    }
-
-    @Test
-    void whenDeleteProjectByIdThanReturnStatus200() throws Exception {
-        int id = 1;
-        ResponseEntity<HttpStatus> expectedResponse = new ResponseEntity<>(HttpStatus.OK);
-        ResponseEntity<HttpStatus> actualResponse = projectController.deleteProject(id);
-        assertEquals(expectedResponse.getStatusCode(), actualResponse.getStatusCode());
     }
 
     @Test

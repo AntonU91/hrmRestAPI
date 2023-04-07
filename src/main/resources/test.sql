@@ -56,15 +56,15 @@ create table  if not exists hibernate_sequence
 
 
 
--- INSERT INTO employee (id, experience_level, hired_at, name, position, surname) VALUES (2, 'MIDDLE', '2023-04-02', 'Anton', 'DEVELOPER', 'Uzhva');
--- INSERT INTO employee (id, experience_level, hired_at, name, position, surname) VALUES (3, 'JUNIOR', '2023-04-01', 'Alisa', 'DEVELOPER', 'Karpenko');
--- INSERT INTO employee (id, experience_level, hired_at, name, position, surname) VALUES (4, 'MIDDLE', '2023-04-03', 'Valik', 'QA', 'Krishenko');
---
--- INSERT INTO project (id, launched_at, name, project_manager_id) VALUES (2, '2023-04-02', 'First project', null);
--- INSERT INTO project (id, launched_at, name, project_manager_id) VALUES (13, '2023-04-03', 'Second Proj', null);
--- INSERT INTO project (id, launched_at, name, project_manager_id) VALUES (14, '2023-04-03', 'Third', null);
---
--- INSERT INTO project_manager (id, hired_at, name, surname) VALUES (2, '2023-04-05', 'Bogdan', 'Gorbach');
--- INSERT INTO project_manager (id, hired_at, name, surname) VALUES (3, '2023-04-01', 'Svitlana', 'Zarevich');
+INSERT INTO employee (id, experience_level, hired_at, name, position, surname) VALUES (2, 'MIDDLE', '2023-04-02', 'Anton', 'DEVELOPER', 'Uzhva');
+INSERT INTO employee (id, experience_level, hired_at, name, position, surname) VALUES (3, 'JUNIOR', '2023-04-01', 'Alisa', 'DEVELOPER', 'Karpenko');
+INSERT INTO employee (id, experience_level, hired_at, name, position, surname) VALUES (4, 'MIDDLE', '2023-04-03', 'Valik', 'QA', 'Krishenko');
+
+INSERT INTO project (id, launched_at, name, project_manager_id) VALUES (2, '2023-04-02', 'First project', null);
+INSERT INTO project (id, launched_at, name, project_manager_id) VALUES (13, '2023-04-03', 'Second Proj', null);
+INSERT INTO project (id, launched_at, name, project_manager_id) VALUES (14, '2023-04-03', 'Third', null);
+
+INSERT INTO project_manager (id, hired_at, name, surname) VALUES (2, '2023-04-05', 'Bogdan', 'Gorbach');
+INSERT INTO project_manager (id, hired_at, name, surname) VALUES (3, '2023-04-01', 'Svitlana', 'Zarevich');
 
 
