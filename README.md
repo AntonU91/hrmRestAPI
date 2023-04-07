@@ -1,4 +1,5 @@
 # hrmhrmRestAPI
+For testing my project you might use *test.sql*  file which is located in * *src/main/resources* *.
 ## References:
 ### For manipulating with project:
 
